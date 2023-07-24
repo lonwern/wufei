@@ -220,7 +220,7 @@ async fn run_individual(
         lp.follow = false;
         lp.pretty = true;
         let output = current_pods.log(&pod_info.name, &lp).await?;
-        let log_msg = format!("{}: {:?}\n", &log_prefix, &output);
+        let log_msg = format!("{}: {}", &log_prefix, &output);
         match out_file {
             Some(ref mut file) => record(file, output).await?,
             None => stdout(log_msg).await?,
@@ -242,7 +242,7 @@ async fn run_individual(
                     let log = if j[key].is_null() {
                         format!("")
                     } else {
-                        format!("{}: {:?}\n", &log_prefix, line_str)
+                        format!("{}: {}", &log_prefix, line_str)
                     };
                     log
                 }
@@ -250,7 +250,7 @@ async fn run_individual(
             }
         } else {
             format!(
-                "{}: {:?}\n",
+                "{}: {}",
                 &log_prefix,
                 String::from_utf8_lossy(&unpacked_line)
             )
