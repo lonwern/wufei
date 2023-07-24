@@ -458,7 +458,7 @@ async fn check_status(pod: &str) -> Result<bool, Box<dyn ::std::error::Error>> {
 }
 
 pub async fn create_kube_client() -> Result<KubeClient, Box<dyn ::std::error::Error>> {
-    let config = config::load_kube_config().await?;
+    let config = config::load_kube_config().await.or_else(|_| config::incluster_config())?;
     Ok(KubeClient {
         client: APIClient::new(config),
     })
